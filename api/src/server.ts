@@ -43,7 +43,7 @@ const server = new ApolloServer({
       return { user, headers: ctx.headers }; //  add the user to the ctx
     }
   },
-  schema: exSchema,
+  schema: exSchema
 });
 
 server.applyMiddleware({ app });

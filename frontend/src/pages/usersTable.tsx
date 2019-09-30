@@ -5,90 +5,7 @@ import MainHeader from "../components/mainHeader";
 //import Checkbox from "../components/checkbox" ;
 import Switch from "react-switch";
 
-type User = {
-  id: string;
-  email: string;
-  admin: boolean;
-  publisher: boolean;
-  teacher: boolean;
-  teacherPro: boolean;
-  family: boolean;
-};
-
-const usersExample: User[] = [
-  {
-    id: "aa",
-    email: "Pepe",
-    admin: false,
-    publisher: false,
-    teacher: false,
-    teacherPro: false,
-    family: false
-  },
-  {
-    id: "bb",
-    email: "Raúl",
-    admin: false,
-    publisher: false,
-    teacher: false,
-    teacherPro: false,
-    family: false
-  },
-  {
-    id: "cc",
-    email: "Juan",
-    admin: false,
-    publisher: false,
-    teacher: true,
-    teacherPro: false,
-    family: false
-  },
-  {
-    id: "dd",
-    email: "Jacinta",
-    admin: false,
-    publisher: false,
-    teacher: false,
-    teacherPro: false,
-    family: true
-  },
-  {
-    id: "ee",
-    email: "Lucia",
-    admin: true,
-    publisher: false,
-    teacher: false,
-    teacherPro: false,
-    family: false
-  },
-  {
-    id: "ff",
-    email: "Julia",
-    admin: false,
-    publisher: true,
-    teacher: false,
-    teacherPro: false,
-    family: false
-  }
-  // {id: "aa", email: "Pepe", admin: false, publisher: false, teacher: false, teacherPro: false, family: false},
-  // {id: "aa", email: "Raúl", admin: false, publisher: false, teacher: false, teacherPro: false, family: false},
-  // {id: "aa", email: "Juan", admin: false, publisher: false, teacher: false, teacherPro: false, family: false},
-  // {id: "aa", email: "Jacinta", admin: false, publisher: false, teacher: false, teacherPro: false, family: false},
-  // {id: "aa", email: "Lucia", admin: false, publisher: false, teacher: false, teacherPro: false, family: false},
-  // {id: "aa", email: "Julia", admin: false, publisher: false, teacher: false, teacherPro: false, family: false},
-  // {id: "aa", email: "Pepe", admin: false, publisher: false, teacher: false, teacherPro: false, family: false},
-  // {id: "aa", email: "Raúl", admin: false, publisher: false, teacher: false, teacherPro: false, family: false},
-  // {id: "aa", email: "Juan", admin: false, publisher: false, teacher: false, teacherPro: false, family: false},
-  // {id: "aa", email: "Jacinta", admin: false, publisher: false, teacher: false, teacherPro: false, family: false},
-  // {id: "aa", email: "Lucia", admin: false, publisher: false, teacher: false, teacherPro: false, family: false},
-  // {id: "aa", email: "Julia", admin: false, publisher: false, teacher: false, teacherPro: false, family: false},
-  // {id: "aa", email: "Pepe", admin: false, publisher: false, teacher: false, teacherPro: false, family: false},
-  // {id: "aa", email: "Raúl", admin: false, publisher: false, teacher: false, teacherPro: false, family: false},
-  // {id: "aa", email: "Juan", admin: false, publisher: false, teacher: false, teacherPro: false, family: false},
-  // {id: "aa", email: "Jacinta", admin: false, publisher: false, teacher: false, teacherPro: false, family: false},
-  // {id: "aa", email: "Lucia", admin: false, publisher: false, teacher: false, teacherPro: false, family: false},
-  // {id: "aa", email: "Julia", admin: false, publisher: false, teacher: false, teacherPro: false, family: false},
-];
+import { usersExample } from "./users_example";
 
 export function UsersTable() {
   const [editActive, setEditActive] = useState("");
@@ -98,49 +15,56 @@ export function UsersTable() {
       <MainHeader />
       <h1>Usuarios de Bitbloq</h1>
       <DataTable>
-        <DataRow>
+        <TitleRow>
           <NameColumn>
             <h2>e-Mail</h2>
           </NameColumn>
-          <TableColumn>
+          <TableColumn isTitle={true}>
             <h2>Administrador/a</h2>
           </TableColumn>
-          <TableColumn>
+          <TableColumn isTitle={true}>
             <h2>Publicador/a</h2>
           </TableColumn>
-          <TableColumn>
+          <TableColumn isTitle={true}>
             <h2>Profesor/a</h2>
           </TableColumn>
-          <TableColumn>
+          <TableColumn isTitle={true}>
             <h2>Profesor/a Pro</h2>
           </TableColumn>
-          <TableColumn>
+          <TableColumn isTitle={true}>
             <h2>Familia</h2>
           </TableColumn>
-          <TableColumn></TableColumn>
-        </DataRow>
+          <TableColumn isTitle={true}></TableColumn>
+        </TitleRow>
         {usersExample.map(user =>
           user.email === editActive ? (
             <DataRow active={true}>
               <NameColumn active={true}>
                 <p>{user.email}</p>
               </NameColumn>
-              <TableColumn>
+              <TableColumn editActive={true}>
                 <Switch onChange={() => null} checked={user.admin} />
               </TableColumn>
-              <TableColumn>
+              <TableColumn editActive={true}>
                 <Switch onChange={() => null} checked={user.publisher} />
               </TableColumn>
-              <TableColumn>
+              <TableColumn editActive={true}>
                 <Switch onChange={() => null} checked={user.teacher} />
               </TableColumn>
-              <TableColumn>
+              <TableColumn editActive={true}>
                 <Switch onChange={() => null} checked={user.teacherPro} />
               </TableColumn>
-              <TableColumn>
+              <TableColumn editActive={true}>
                 <Switch onChange={() => null} checked={user.family} />
               </TableColumn>
-              <TableColumn>
+              <TableColumn editActive={true}>
+                <ButtonEdit
+                  save={true}
+                  value={user.email}
+                  onClick={event => setEditActive("")}
+                >
+                  Guardar
+                </ButtonEdit>
                 <ButtonEdit
                   cancel={true}
                   value={user.email}
@@ -170,7 +94,7 @@ export function UsersTable() {
               <TableColumn>
                 <Switch onChange={() => null} checked={user.family} />
               </TableColumn>
-              <TableColumn>
+              <TableColumn isTitle={true}>
                 <ButtonEdit
                   edit={true}
                   value={user.email}
@@ -209,14 +133,13 @@ export const Content = styled.div`
   }
 `;
 
-export const DataTable = styled.div`
+const DataTable = styled.div`
   margin-top: 21px;
   margin-bottom: 21px;
   border-collapse: collapse;
-  font-family: VodafoneRg, Arial, Helvetica, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   color: #333333;
-  width: 80%;
-  /* justify-content: center; */
+  width: 90%;
   align-items: center;
 `;
 
@@ -224,9 +147,9 @@ interface RowProps {
   active?: boolean;
 }
 
-const DataRow = styled.div<RowProps>`
-  border-bottom: 1px solid #ebebeb;
-  border-top: 1px solid #ebebeb;
+const TitleRow = styled.div`
+  border-bottom: 1px solid blue;
+  border-top: 1px solid blue;
   margin-right: 14px;
   height: 50px;
   align-items: middle;
@@ -234,11 +157,28 @@ const DataRow = styled.div<RowProps>`
   align-items: center;
   height: 51px;
   justify-content: space-around;
-  background-color: ${props => (props.active ? "blue" : "white")};
+  background-color: white;
 `;
 
-const TableColumn = styled.div`
-  border-right: 1px solid #ebebeb;
+const DataRow = styled.div<RowProps>`
+  border-bottom: 1px solid blue;
+  border-top: 1px solid blue;
+  margin-right: 14px;
+  height: 50px;
+  align-items: middle;
+  display: flex;
+  align-items: center;
+  height: 51px;
+  justify-content: space-around;
+  :hover {
+    background-color: #99ccff;
+    opacity: 1;
+    cursor: pointer;
+  }
+`;
+
+const TableColumn = styled.div<{ isTitle?: boolean; editActive?: boolean }>`
+  border-right: 1px solid blue;
   width: 15%;
   margin: 1px;
   padding: 10px;
@@ -246,6 +186,9 @@ const TableColumn = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  opacity: ${props => (props.isTitle ? 1 : props.editActive ? 1 : 0.3)};
+
   h2 {
     font-size: 15px;
     color: blue;
@@ -256,8 +199,8 @@ const TableColumn = styled.div`
 `;
 
 const NameColumn = styled.div<RowProps>`
-  border-right: 1px solid #ebebeb;
-  border-left: 1px solid #ebebeb;
+  border-right: 1px solid blue;
+  border-left: 1px solid blue;
   width: 20%;
   margin: 1px;
   padding: 10px;
@@ -271,21 +214,24 @@ const NameColumn = styled.div<RowProps>`
   }
   p {
     font-size: 15px;
-    color: ${props => (props.active ? "white" : "black")};
+    color: black;
   }
 `;
 
-const CheckRole = styled.div`
-  /* height: 50px; */
-`;
-
-const ButtonEdit = styled.button<{ edit?: boolean; cancel?: boolean }>`
+const ButtonEdit = styled.button<{
+  edit?: boolean;
+  cancel?: boolean;
+  save?: boolean;
+}>`
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: ${props => {
     if (props.edit) {
       return "blue";
+    }
+    if (props.save) {
+      return "green";
     }
     if (props.cancel) {
       return "red";
@@ -294,11 +240,11 @@ const ButtonEdit = styled.button<{ edit?: boolean; cancel?: boolean }>`
   }};
   color: white;
   font-size: 15px;
-  width: 80px;
+  width: 60px;
   height: 40px;
   border-radius: 50px;
   border: none;
-  margin-right: 5px;
+  margin-right: 2px;
   &:focus {
     outline: none;
   }

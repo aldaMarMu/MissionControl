@@ -100,4 +100,3 @@ export const UserModel: Model<IUser> = model<IUser>(
   "UserModels",
   ContactSchema
 );
-
