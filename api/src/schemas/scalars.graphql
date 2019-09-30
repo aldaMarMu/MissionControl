@@ -1,0 +1,13 @@
+# import Query.*, Mutation.*, * from "./user.graphql"
+
+scalar Date
+scalar JSON
+scalar ObjectID
+scalar EmailAddress
+scalar Upload
+
+enum Role {
+  ADMIN
+  USER
+}
+

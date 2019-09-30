@@ -1,0 +1,57 @@
+version: '3.2'
+
+services:
+  frontend:
+    image: node:current
+    environment:
+      - API_HOST=http://localhost:4001/graphql
+      - API_HOST_SERVER=http://api:4000/graphql
+    depends_on:
+      - api
+    volumes:
+      - type: bind
+        source: ./frontend
+        target: /opt/frontend
+      - /opt/frontend/node_modules/
+      - /opt/frontend/.next/
+    ports:
+      - 4000:3000
+    command: >
+      bash -c "cd /opt/frontend
+      && npm install
+      && npm start"
+
+  api:
+    image: node:current
+    environment:
+      - MONGO_URL=mongodb://mongodb/bitbloq_space
+      - JWT_SECRET=supersecretpassword
+      - PORT=8000
+    depends_on:
+      - mongodb
+    volumes:
+      - type: bind
+        source: ./api
+        target: /opt/api
+      - /opt/api/node_modules/
+      - /opt/api/.cache/
+    expose:
+      - 4000
+    ports:
+      - 4001:4000
+      - 9229:9229
+    command: >
+      bash -c "cd /opt/api
+      && npm install
+      && npm run dev-inspect"
+
+  mongodb:
+    image: mongo:latest
+    environment:
+      - MONGO_DATA_DIR=/data/db
+      - MONGO_LOG_DIR=/dev/null
+    volumes:
+      - ./data/db:/data/db
+    ports:
+      - 8001:27017
+    command: mongod --smallfiles --logpath=/dev/null

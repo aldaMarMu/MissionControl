@@ -1,0 +1,42 @@
+# import Date, ObjectID, EmailAddress, JSON, Role from "./scalars.graphql"
+
+directive @authRequired(requires: [Role] = [ADMIN]) on OBJECT | FIELD_DEFINITION
+
+type Query {
+  users: [User] @authRequired(requires: [ADMIN])
+  me: User @authRequired(requires: [ADMIN])
+}
+type Mutation {
+  login(email: EmailAddress!, password: String!): String
+  updateUserRoles(id: ObjectID!, input: UserIn!): User
+    @authRequired(requires: [ADMIN])
+}
+
+type User {
+  id: ObjectID
+  email: EmailAddress
+  password: String
+  admin: Boolean
+  publisher: Boolean
+  teacher: Boolean
+  teacherPro: Boolean
+  family: Boolean
+  name: String
+  center: String
+  active: Boolean
+  signUpToken: String
+  authToken: String
+  notifications: Boolean
+  createdAt: Date
+  updatedAt: Date
+  signUpSurvey: JSON
+  rootFolder: ObjectID
+}
+
+input UserIn {
+  admin: Boolean
+  publisher: Boolean
+  teacher: Boolean
+  teacherPro: Boolean
+  family: Boolean
+}
