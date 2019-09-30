@@ -173,7 +173,6 @@ const DataRow = styled.div<RowProps>`
   :hover {
     background-color: #99ccff;
     opacity: 1;
-    cursor: pointer;
   }
 `;
 
@@ -247,5 +246,8 @@ const ButtonEdit = styled.button<{
   margin-right: 2px;
   &:focus {
     outline: none;
+  }
+  :hover {
+    cursor: pointer;
   }
 `;

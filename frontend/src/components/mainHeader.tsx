@@ -17,7 +17,7 @@ const MainHeader: React.FC = () => {
     <Header>
       <img src={logobeta} />
       <HeaderUser>
-        {window.localStorage.getItem("authToken") ? (
+        {window.localStorage.getItem("token") ? (
           <p>Usuario</p>
         ) : (
           <p>Iniciar sesión</p>

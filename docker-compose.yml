@@ -6,6 +6,7 @@ services:
     environment:
       - API_HOST=http://localhost:4001/graphql
       - API_HOST_SERVER=http://api:4000/graphql
+      - REACT_APP_API_HOST=localhost:8000/graphql
     depends_on:
       - api
     volumes:
@@ -20,7 +21,6 @@ services:
       bash -c "cd /opt/frontend
       && npm install
       && npm start"
-
   api:
     image: node:current
     environment:
@@ -36,15 +36,15 @@ services:
       - /opt/api/node_modules/
       - /opt/api/.cache/
     expose:
-      - 4000
+      - 8000
     ports:
-      - 4001:4000
+      - 8000:8000
       - 9229:9229
     command: >
       bash -c "cd /opt/api
       && npm install
       && npm run dev-inspect"
-
+      
   mongodb:
     image: mongo:latest
     environment:
