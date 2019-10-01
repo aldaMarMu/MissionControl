@@ -1,18 +1,51 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled";
-import MainHeader from "../components/mainHeader";
+import { useQuery, useMutation } from "@apollo/react-hooks";
+
+import MainHeader, { Section } from "../components/mainHeader";
 //import Checkbox from "../components/checkbox" ;
 import Switch from "react-switch";
 
+import { USERS_QUERY, UPDATEUSERSROLE_MUTATION } from "../apollo/queries";
 import { usersExample } from "./users_example";
+import MainLayout from "../components/mainLayout";
+
+type User = {
+  id: string;
+  email: string;
+  admin: boolean;
+  publisher?: boolean;
+  teacher?: boolean;
+  teacherPro?: boolean;
+  family?: boolean;
+};
 
 export function UsersTable() {
   const [editActive, setEditActive] = useState("");
+  const [admin, setAdmin] = useState(false);
+  const [teacher, setTeacher] = useState(false);
+  const [teacherPro, setTeacherPro] = useState(false);
+  const [publisher, setPublisher] = useState(false);
+  const [family, setFamily] = useState(false);
 
+  const [updateUserRoles] = useMutation(UPDATEUSERSROLE_MUTATION);
+  const { data, error, loading } = useQuery(USERS_QUERY);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  if (data && !error) {
+    console.log(data);
+  }
+  // useEffect(() => {
+  //   admin;
+  //   teacher;
+  //   teacherPro;
+  //   publisher;
+  //   family;
+  // }, []);
   return (
-    <Content>
-      <MainHeader />
+    <MainLayout activeSection={Section.Users}>
       <h1>Usuarios de Bitbloq</h1>
       <DataTable>
         <TitleRow>
@@ -36,81 +69,147 @@ export function UsersTable() {
           </TableColumn>
           <TableColumn isTitle={true}></TableColumn>
         </TitleRow>
-        {usersExample.map(user =>
-          user.email === editActive ? (
-            <DataRow active={true}>
-              <NameColumn active={true}>
-                <p>{user.email}</p>
-              </NameColumn>
-              <TableColumn editActive={true}>
-                <Switch onChange={() => null} checked={user.admin} />
-              </TableColumn>
-              <TableColumn editActive={true}>
-                <Switch onChange={() => null} checked={user.publisher} />
-              </TableColumn>
-              <TableColumn editActive={true}>
-                <Switch onChange={() => null} checked={user.teacher} />
-              </TableColumn>
-              <TableColumn editActive={true}>
-                <Switch onChange={() => null} checked={user.teacherPro} />
-              </TableColumn>
-              <TableColumn editActive={true}>
-                <Switch onChange={() => null} checked={user.family} />
-              </TableColumn>
-              <TableColumn editActive={true}>
-                <ButtonEdit
-                  save={true}
-                  value={user.email}
-                  onClick={event => setEditActive("")}
-                >
-                  Guardar
-                </ButtonEdit>
-                <ButtonEdit
-                  cancel={true}
-                  value={user.email}
-                  onClick={event => setEditActive("")}
-                >
-                  Cancelar
-                </ButtonEdit>
-              </TableColumn>
-            </DataRow>
-          ) : (
-            <DataRow active={false}>
-              <NameColumn active={false}>
-                <p>{user.email}</p>
-              </NameColumn>
-              <TableColumn>
-                <Switch onChange={() => null} checked={user.admin} />
-              </TableColumn>
-              <TableColumn>
-                <Switch onChange={() => null} checked={user.publisher} />
-              </TableColumn>
-              <TableColumn>
-                <Switch onChange={() => null} checked={user.teacher} />
-              </TableColumn>
-              <TableColumn>
-                <Switch onChange={() => null} checked={user.teacherPro} />
-              </TableColumn>
-              <TableColumn>
-                <Switch onChange={() => null} checked={user.family} />
-              </TableColumn>
-              <TableColumn isTitle={true}>
-                <ButtonEdit
-                  edit={true}
-                  value={user.email}
-                  onClick={event => {
-                    console.log(event);
-                    setEditActive(user.email);
-                  }}
-                >
-                  Editar
-                </ButtonEdit>
-              </TableColumn>
-            </DataRow>
-          )
-        )}
+        {data &&
+          data.users &&
+          (data.users as User[]).map(user =>
+            user.email === editActive ? (
+              <DataRow active={true}>
+                <NameColumn active={true}>
+                  <p>{user.email}</p>
+                </NameColumn>
+                <TableColumn editActive={true}>
+                  <Switch
+                    onChange={value => {
+                      console.log(value);
+                      setAdmin(value);
+                    }}
+                    checked={user.admin || false}
+                  />
+                </TableColumn>
+                <TableColumn editActive={true}>
+                  <Switch
+                    onChange={value => {
+                      console.log(value);
+                      setPublisher(value);
+                    }}
+                    checked={user.publisher || false}
+                  />
+                </TableColumn>
+                <TableColumn editActive={true}>
+                  <Switch
+                    onChange={value => {
+                      console.log(value);
+                      setTeacher(value);
+                    }}
+                    checked={user.teacher || false}
+                  />
+                </TableColumn>
+                <TableColumn editActive={true}>
+                  <Switch
+                    onChange={value => {
+                      console.log(value);
+                      setTeacherPro(value);
+                    }}
+                    checked={user.teacherPro || false}
+                  />
+                </TableColumn>
+                <TableColumn editActive={true}>
+                  <Switch
+                    onChange={value => {
+                      console.log(value);
+                      setFamily(value);
+                    }}
+                    checked={user.family || false}
+                  />
+                </TableColumn>
+                <TableColumn editActive={true}>
+                  <ButtonEdit
+                    save={true}
+                    value={user.email}
+                    onClick={async event => {
+                      await updateUserRoles({
+                        variables: {
+                          id: user.id,
+                          input: {
+                            admin,
+                            publisher,
+                            teacher,
+                            teacherPro,
+                            family
+                          }
+                        }
+                      });
+                      setEditActive("");
+                    }}
+                  >
+                    Guardar
+                  </ButtonEdit>
+                  <ButtonEdit
+                    cancel={true}
+                    value={user.email}
+                    onClick={event => setEditActive("")}
+                  >
+                    Cancelar
+                  </ButtonEdit>
+                </TableColumn>
+              </DataRow>
+            ) : (
+              <DataRow active={false}>
+                <NameColumn active={false}>
+                  <p>{user.email}</p>
+                </NameColumn>
+                <TableColumn>
+                  <Switch
+                    onChange={() => null}
+                    disabled={true}
+                    checked={user.admin || false}
+                  />
+                </TableColumn>
+                <TableColumn>
+                  <Switch
+                    onChange={() => null}
+                    disabled={true}
+                    checked={user.publisher || false}
+                  />
+                </TableColumn>
+                <TableColumn>
+                  <Switch
+                    onChange={() => null}
+                    disabled={true}
+                    checked={user.teacher || false}
+                  />
+                </TableColumn>
+                <TableColumn>
+                  <Switch
+                    onChange={() => null}
+                    disabled={true}
+                    checked={user.teacherPro || false}
+                  />
+                </TableColumn>
+                <TableColumn>
+                  <Switch
+                    onChange={() => null}
+                    disabled={true}
+                    checked={user.family || false}
+                  />
+                </TableColumn>
+                <TableColumn isTitle={true}>
+                  <ButtonEdit
+                    edit={true}
+                    value={user.email}
+                    onClick={event => {
+                      console.log(event);
+                      setEditActive(user.email);
+                    }}
+                  >
+                    Editar
+                  </ButtonEdit>
+                </TableColumn>
+              </DataRow>
+            )
+          )}
       </DataTable>
-    </Content>
+    </MainLayout>
   );
 }
 

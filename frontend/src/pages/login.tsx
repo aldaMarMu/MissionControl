@@ -1,13 +1,12 @@
-import React, {FC, useState} from "react";
+import React, { FC, useState } from "react";
 
 import styled from "@emotion/styled";
-import {MainLayout} from "../components/mainLayout";
 
 import { useMutation } from "@apollo/react-hooks";
 import AccessLayout from "../components/accessLayout";
 import { LOGIN_MUTATION } from "../apollo/queries";
 import { Redirect, Route } from "react-router";
-import {Home} from "./home";
+import { Home } from "./home";
 
 export const LoginPage: FC = () => {
   const [email, setEmail] = useState("");
@@ -24,19 +23,19 @@ export const LoginPage: FC = () => {
     } catch (e) {
       setLoginError(true);
       setLoginSuccess(false);
-      console.log(e)
+      console.log(e);
     }
   };
 
   const onLoginSuccess = async (token: string) => {
-    await localStorage.setItem('token', token);
+    await localStorage.setItem("token", token);
     setLoginSuccess(true);
     setLoginError(false);
   };
 
   return (
     <AccessLayout title="Bitbloq - Login" panelTitle="Entrar">
-      {loginSuccess && <Redirect to="/"/>}
+      {loginSuccess && <Redirect to="/" />}
       <LoginPanel>
         <FormGroup>
           <label>Correo electrónico</label>
@@ -63,9 +62,7 @@ export const LoginPage: FC = () => {
             Correo electrónico o contraseña no válidos
           </ErrorMessage>
         )}
-        <Button onClick={() => onLoginClick()} >
-          Entrar
-        </Button>
+        <Button onClick={() => onLoginClick()}>Entrar</Button>
       </LoginPanel>
     </AccessLayout>
   );
@@ -112,6 +109,6 @@ const Link = styled.a`
   text-decoration: none;
 `;
 
-const Input= styled.input`
+const Input = styled.input`
   font-family: Arial, Helvetica, sans-serif;
 `;

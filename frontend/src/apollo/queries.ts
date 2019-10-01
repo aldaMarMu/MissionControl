@@ -5,3 +5,29 @@ export const LOGIN_MUTATION = gql`
     login(email: $email, password: $password)
   }
 `;
+
+
+export const USERS_QUERY = gql`
+  query Users {
+    users {
+      id
+      email
+      teacher
+      publisher
+      teacherPro
+      admin
+    }
+  }
+`;
+
+export const UPDATEUSERSROLE_MUTATION =gql`
+  mutation UpdateUserRoles($id: ObjectID!, $input: UserIn!){
+    updateUserRoles(id: $id, input: $input){
+      id
+      email
+      teacher
+      publisher
+      teacherPro
+      admin
+    }
+}`

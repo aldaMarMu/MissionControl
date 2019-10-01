@@ -1,33 +1,14 @@
 import React from "react";
-
 import styled from "@emotion/styled";
+
+import MainLayout from "../components/mainLayout";
+import { Section } from "../components/mainHeader";
 
 export function UsersAnalytics() {
   return (
-    <div>
-      <Content>
-        <h1>Bitbloq mission control</h1>
-        <p>¡Solo para administradores!</p>
-      </Content>
-    </div>
+    <MainLayout activeSection={Section.Analytics}>
+      <h1>Bitbloq mission control</h1>
+      <p>¡Solo para administradores!</p>
+    </MainLayout>
   );
 }
-
-export const Content = styled.div`
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-
-  h1 {
-    font-size: 60px;
-    margin-bottom: 20px;
-    font-weight: 600;
-    color: ${props => "blue"};
-  }
-
-  p {
-    font-size: 24px;
-  }
-`;

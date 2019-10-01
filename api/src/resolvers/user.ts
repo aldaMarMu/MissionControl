@@ -65,6 +65,7 @@ const userResolver = {
       if (!contactFound) {
         return new ApolloError("User does not exist", "USER_NOT_FOUND");
       }
+      console.log(args.input)
       return await UserModel.findOneAndUpdate(
         { _id: contactFound._id },
         { $set: args.input },
