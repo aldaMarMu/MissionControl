@@ -20,6 +20,17 @@ export const USERS_QUERY = gql`
   }
 `;
 
+export const USERS_ANALYTICS_QUERY = gql`
+query usersAnalytics($loginAfter: Date){
+  usersAnalytics(loginAfter: $loginAfter){
+  registered
+  active
+  admin
+  lastLogin
+  }
+}
+`;
+
 export const UPDATEUSERSROLE_MUTATION =gql`
   mutation UpdateUserRoles($id: ObjectID!, $input: UserIn!){
     updateUserRoles(id: $id, input: $input){

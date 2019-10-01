@@ -9,19 +9,21 @@ import Switch from "react-switch";
 import { USERS_QUERY, UPDATEUSERSROLE_MUTATION } from "../apollo/queries";
 import { usersExample } from "./users_example";
 import MainLayout from "../components/mainLayout";
+import { ErrorLoadingPage } from "../components/errorLoading";
 
 type User = {
   id: string;
   email: string;
   admin: boolean;
-  publisher?: boolean;
-  teacher?: boolean;
-  teacherPro?: boolean;
-  family?: boolean;
+  publisher: boolean;
+  teacher: boolean;
+  teacherPro: boolean;
+  family: boolean;
 };
 
 export function UsersTable() {
   const [editActive, setEditActive] = useState("");
+  // const [roles, setRoles]: [boolean[], React.Dispatch<boolean[]>] = useState();
   const [admin, setAdmin] = useState(false);
   const [teacher, setTeacher] = useState(false);
   const [teacherPro, setTeacherPro] = useState(false);
@@ -32,18 +34,11 @@ export function UsersTable() {
   const { data, error, loading } = useQuery(USERS_QUERY);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <ErrorLoadingPage loading={true} />;
   }
-  if (data && !error) {
-    console.log(data);
+  if (error) {
+    return <ErrorLoadingPage error={true} />;
   }
-  // useEffect(() => {
-  //   admin;
-  //   teacher;
-  //   teacherPro;
-  //   publisher;
-  //   family;
-  // }, []);
   return (
     <MainLayout activeSection={Section.Users}>
       <h1>Usuarios de Bitbloq</h1>
@@ -78,6 +73,11 @@ export function UsersTable() {
                   <p>{user.email}</p>
                 </NameColumn>
                 <TableColumn editActive={true}>
+                  {/* {setAdmin(user.admin)}
+                  {setPublisher(user.publisher)}
+                  {setTeacher(user.teacher)}
+                  {setTeacherPro(user.teacherPro)}
+                  {setFamily(user.family)} */}
                   <Switch
                     onChange={value => {
                       console.log(value);

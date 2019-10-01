@@ -65,7 +65,7 @@ const userResolver = {
       if (!contactFound) {
         return new ApolloError("User does not exist", "USER_NOT_FOUND");
       }
-      console.log(args.input)
+      console.log(args.input);
       return await UserModel.findOneAndUpdate(
         { _id: contactFound._id },
         { $set: args.input },
@@ -94,8 +94,25 @@ const userResolver = {
      *  Users: returns all the users in the platform. It can be executed only by admin user.
      *  args: nothing.
      */
-    users(root: any, args: any, context: any) {
-      return UserModel.find({});
+    users: async (root: any, args: any, context: any) => {
+      return await UserModel.find({});
+    },
+
+    /**
+     *  UsersAnalytics: returns all the users in the platform. It can be executed only by admin user.
+     *  args: nothing.
+     */
+    usersAnalytics: async (root: any, args: any, context: any) => {
+      const registered: number = await UserModel.countDocuments({});
+      const active: number = await UserModel.countDocuments({ active: true });
+      const admin: number = await UserModel.countDocuments({ admin: true });
+      let lastLogin: number = 0;
+      if (args.loginAfter) {
+        lastLogin = await UserModel.countDocuments({
+          createdAt: { $gte: args.loginAfter }
+        });
+      }
+      return { registered, active, admin, lastLogin };
     }
   }
 };

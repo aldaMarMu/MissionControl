@@ -1,8 +1,10 @@
-# import Date, ObjectID, EmailAddress, JSON, Role from "./scalars.graphql"
+# import Date, ObjectID, EmailAddress, Number, JSON, Role from "./scalars.graphql"
 
 directive @authRequired(requires: [Role] = [ADMIN]) on OBJECT | FIELD_DEFINITION
 
 type Query {
+  usersAnalytics(loginAfter: Date): usersAnalytics
+    @authRequired(requires: [ADMIN])
   users: [User] @authRequired(requires: [ADMIN])
   me: User @authRequired(requires: [ADMIN])
 }
@@ -10,6 +12,13 @@ type Mutation {
   login(email: EmailAddress!, password: String!): String
   updateUserRoles(id: ObjectID!, input: UserIn!): User
     @authRequired(requires: [ADMIN])
+}
+
+type usersAnalytics {
+  registered: Number
+  active: Number
+  admin: Number
+  lastLogin: Number
 }
 
 type User {

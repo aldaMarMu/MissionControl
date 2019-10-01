@@ -40,7 +40,17 @@ const MainHeader: React.FC<MainHeaderProps> = ({ activeSection }) => {
       </Left>
       <HeaderUser>
         {window.localStorage.getItem("token") ? (
-          <p>Usuario</p>
+          <div>
+            <p>Administrador/a</p>
+            <HeaderButton
+              onClick={() => {
+                localStorage.clear();
+                window.location.reload();
+              }}
+            >
+              Cerrar sesión
+            </HeaderButton>
+          </div>
         ) : (
           <a href="/login">Iniciar sesión</a>
         )}
