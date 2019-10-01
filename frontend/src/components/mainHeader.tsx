@@ -74,7 +74,7 @@ const Header = styled.div`
 
   img {
     margin-left: 50px;
-    height: 55px;
+    height: 50px;
   }
 `;
 
