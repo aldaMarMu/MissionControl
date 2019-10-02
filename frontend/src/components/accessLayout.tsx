@@ -1,6 +1,5 @@
 import React, { FC } from "react";
 import styled from "@emotion/styled";
-import { Global, css } from "@emotion/core";
 import logoBetaImage from "../images/logo-beta.svg";
 
 export enum AccessLayoutSize {
@@ -93,8 +92,8 @@ const Title = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: Roboto;
-  font-size: 18px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 30px;
   font-weight: bold;
 `;
 

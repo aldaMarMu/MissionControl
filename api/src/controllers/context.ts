@@ -1,5 +1,5 @@
 import { ApolloError, AuthenticationError } from "apollo-server-koa";
-import { IUserInToken } from "../types/user";
+import { IUserInToken } from "../types/types";
 const jsonwebtoken = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 

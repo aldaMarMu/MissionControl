@@ -5,15 +5,13 @@ import styled from "@emotion/styled";
 import { useMutation } from "@apollo/react-hooks";
 import AccessLayout from "../components/accessLayout";
 import { LOGIN_MUTATION } from "../apollo/queries";
-import { Redirect, Route } from "react-router";
-import { Home } from "./home";
+import { Redirect } from "react-router";
 
 export const LoginPage: FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState(false);
   const [loginSuccess, setLoginSuccess] = useState(false);
-  const [loggingIn, setLoggingIn] = useState(false);
   const [login] = useMutation(LOGIN_MUTATION);
 
   const onLoginClick = async () => {
@@ -34,7 +32,7 @@ export const LoginPage: FC = () => {
   };
 
   return (
-    <AccessLayout title="Bitbloq - Login" panelTitle="Entrar">
+    <AccessLayout title="Bitbloq - Login" panelTitle="Mission Control">
       {loginSuccess && <Redirect to="/" />}
       <LoginPanel>
         <FormGroup>
@@ -102,13 +100,31 @@ const ErrorMessage = styled.div`
 `;
 
 const Button = styled.button`
-  color: blue;
-`;
-
-const Link = styled.a`
-  text-decoration: none;
+  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: blue;
+  color: white;
+  font-size: 18px;
+  height: 40px;
+  border-radius: 50px;
+  border: none;
+  margin-right: 2px;
+  &:focus {
+    outline: none;
+  }
+  :hover {
+    cursor: pointer;
+  }
 `;
 
 const Input = styled.input`
   font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  margin: 0px 10px;
+  padding: 1px;
+  margin: 1px;
+  height: 30px;
+  width: 100%;
 `;

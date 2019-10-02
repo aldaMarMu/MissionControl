@@ -4,8 +4,8 @@
   "icons": [
     {
       "rel": "icon",
-      "src": "favicon-bitbloq.svg",
-      "type": "image/svg"
+      "src": "favicon-bitbloq.png",
+      "type": "image/png"
     },    
     {
       "src": "logo192.png",

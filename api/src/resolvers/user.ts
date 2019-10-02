@@ -1,8 +1,8 @@
 import { ApolloError, AuthenticationError } from "apollo-server-koa";
 import { contextController } from "../controllers/context";
-import { IUser, UserModel } from "../types/user";
+import { IUser, UserModel } from "../models/user";
 
-import { IEmailData, IResetPasswordToken, ISignUpToken } from "../types/user";
+import { IEmailData, IResetPasswordToken, ISignUpToken } from "../types/types";
 
 const bcrypt = require("bcrypt");
 const jsonwebtoken = require("jsonwebtoken");
@@ -103,13 +103,14 @@ const userResolver = {
      *  args: nothing.
      */
     usersAnalytics: async (root: any, args: any, context: any) => {
+      const date = new Date(args.loginAfter);
       const registered: number = await UserModel.countDocuments({});
       const active: number = await UserModel.countDocuments({ active: true });
       const admin: number = await UserModel.countDocuments({ admin: true });
       let lastLogin: number = 0;
       if (args.loginAfter) {
         lastLogin = await UserModel.countDocuments({
-          createdAt: { $gte: args.loginAfter }
+          createdAt: { $gte: date }
         });
       }
       return { registered, active, admin, lastLogin };

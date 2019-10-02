@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 
-import MainHeader, { Section } from "../components/mainHeader";
-//import Checkbox from "../components/checkbox" ;
+import { Section } from "../components/mainHeader";
 import Switch from "react-switch";
 
 import { USERS_QUERY, UPDATEUSERSROLE_MUTATION } from "../apollo/queries";
-import { usersExample } from "./users_example";
 import MainLayout from "../components/mainLayout";
 import { ErrorLoadingPage } from "../components/errorLoading";
 
@@ -23,7 +21,6 @@ type User = {
 
 export function UsersTable() {
   const [editActive, setEditActive] = useState("");
-  // const [roles, setRoles]: [boolean[], React.Dispatch<boolean[]>] = useState();
   const [admin, setAdmin] = useState(false);
   const [teacher, setTeacher] = useState(false);
   const [teacherPro, setTeacherPro] = useState(false);
@@ -68,59 +65,65 @@ export function UsersTable() {
           data.users &&
           (data.users as User[]).map(user =>
             user.email === editActive ? (
-              <DataRow active={true}>
+              <DataRow active={true} key={user.email}>
+                {console.log(user)}
                 <NameColumn active={true}>
                   <p>{user.email}</p>
                 </NameColumn>
                 <TableColumn editActive={true}>
-                  {/* {setAdmin(user.admin)}
-                  {setPublisher(user.publisher)}
-                  {setTeacher(user.teacher)}
-                  {setTeacherPro(user.teacherPro)}
-                  {setFamily(user.family)} */}
-                  <Switch
-                    onChange={value => {
-                      console.log(value);
-                      setAdmin(value);
-                    }}
-                    checked={user.admin || false}
-                  />
+                  <label>
+                    <Switch
+                      onChange={value => {
+                        console.log(value);
+                        setAdmin(value);
+                      }}
+                      checked={user.admin}
+                    />
+                  </label>
                 </TableColumn>
                 <TableColumn editActive={true}>
-                  <Switch
-                    onChange={value => {
-                      console.log(value);
-                      setPublisher(value);
-                    }}
-                    checked={user.publisher || false}
-                  />
+                  <label>
+                    <Switch
+                      onChange={value => {
+                        console.log(value);
+                        setPublisher(value);
+                      }}
+                      checked={user.publisher}
+                    />
+                  </label>
                 </TableColumn>
                 <TableColumn editActive={true}>
-                  <Switch
-                    onChange={value => {
-                      console.log(value);
-                      setTeacher(value);
-                    }}
-                    checked={user.teacher || false}
-                  />
+                  <label>
+                    <Switch
+                      onChange={value => {
+                        console.log(value);
+                        setTeacher(value);
+                      }}
+                      checked={user.teacher}
+                    />
+                  </label>
                 </TableColumn>
                 <TableColumn editActive={true}>
-                  <Switch
-                    onChange={value => {
-                      console.log(value);
-                      setTeacherPro(value);
-                    }}
-                    checked={user.teacherPro || false}
-                  />
+                  <label>
+                    <Switch
+                      onChange={value => {
+                        console.log(value);
+                        setTeacherPro(value);
+                      }}
+                      checked={user.teacherPro}
+                    />
+                  </label>
                 </TableColumn>
                 <TableColumn editActive={true}>
-                  <Switch
-                    onChange={value => {
-                      console.log(value);
-                      setFamily(value);
-                    }}
-                    checked={user.family || false}
-                  />
+                  <label>
+                    <Switch
+                      onChange={value => {
+                        console.log(value);
+                        setFamily(value);
+                      }}
+                      checked={user.family}
+                    />
+                  </label>
                 </TableColumn>
                 <TableColumn editActive={true}>
                   <ButtonEdit
@@ -140,6 +143,7 @@ export function UsersTable() {
                         }
                       });
                       setEditActive("");
+                      window.location.reload(); //TODO: actualizar con el resultado de la mutation
                     }}
                   >
                     Guardar
@@ -154,44 +158,54 @@ export function UsersTable() {
                 </TableColumn>
               </DataRow>
             ) : (
-              <DataRow active={false}>
+              <DataRow active={false} key={user.email}>
                 <NameColumn active={false}>
                   <p>{user.email}</p>
                 </NameColumn>
                 <TableColumn>
-                  <Switch
-                    onChange={() => null}
-                    disabled={true}
-                    checked={user.admin || false}
-                  />
+                  <label>
+                    <Switch
+                      onChange={() => null}
+                      disabled={true}
+                      checked={user.admin}
+                    />
+                  </label>
                 </TableColumn>
                 <TableColumn>
-                  <Switch
-                    onChange={() => null}
-                    disabled={true}
-                    checked={user.publisher || false}
-                  />
+                  <label>
+                    <Switch
+                      onChange={() => null}
+                      disabled={true}
+                      checked={user.publisher}
+                    />
+                  </label>
                 </TableColumn>
                 <TableColumn>
-                  <Switch
-                    onChange={() => null}
-                    disabled={true}
-                    checked={user.teacher || false}
-                  />
+                  <label>
+                    <Switch
+                      onChange={() => null}
+                      disabled={true}
+                      checked={user.teacher}
+                    />
+                  </label>
                 </TableColumn>
                 <TableColumn>
-                  <Switch
-                    onChange={() => null}
-                    disabled={true}
-                    checked={user.teacherPro || false}
-                  />
+                  <label>
+                    <Switch
+                      onChange={() => null}
+                      disabled={true}
+                      checked={user.teacherPro}
+                    />
+                  </label>
                 </TableColumn>
                 <TableColumn>
-                  <Switch
-                    onChange={() => null}
-                    disabled={true}
-                    checked={user.family || false}
-                  />
+                  <label>
+                    <Switch
+                      onChange={() => null}
+                      disabled={true}
+                      checked={user.family}
+                    />
+                  </label>
                 </TableColumn>
                 <TableColumn isTitle={true}>
                   <ButtonEdit
@@ -200,6 +214,11 @@ export function UsersTable() {
                     onClick={event => {
                       console.log(event);
                       setEditActive(user.email);
+                      setAdmin(user.admin);
+                      setTeacher(user.teacher);
+                      setTeacherPro(user.teacherPro);
+                      setPublisher(user.publisher);
+                      setFamily(user.family);
                     }}
                   >
                     Editar
@@ -277,7 +296,7 @@ const DataRow = styled.div<RowProps>`
 
 const TableColumn = styled.div<{ isTitle?: boolean; editActive?: boolean }>`
   border-right: 1px solid blue;
-  width: 15%;
+  width: 12%;
   margin: 1px;
   padding: 10px;
   align-items: middle;
@@ -299,7 +318,7 @@ const TableColumn = styled.div<{ isTitle?: boolean; editActive?: boolean }>`
 const NameColumn = styled.div<RowProps>`
   border-right: 1px solid blue;
   border-left: 1px solid blue;
-  width: 20%;
+  width: 29%;
   margin: 1px;
   padding: 10px;
   align-items: middle;
@@ -316,11 +335,12 @@ const NameColumn = styled.div<RowProps>`
   }
 `;
 
-const ButtonEdit = styled.button<{
+interface ButtonEditProps {
   edit?: boolean;
   cancel?: boolean;
   save?: boolean;
-}>`
+}
+const ButtonEdit = styled.button<ButtonEditProps>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -338,6 +358,8 @@ const ButtonEdit = styled.button<{
   }};
   color: white;
   font-size: 15px;
+  font-family: Arial, Helvetica, sans-serif;
+
   width: 60px;
   height: 40px;
   border-radius: 50px;

@@ -1,33 +1,15 @@
 import { Document, Model, model, Schema } from "mongoose";
 const timestamps = require("mongoose-timestamp");
-import { ObjectID } from "bson";
 
-// User in token user interface
-export interface IUserInToken {
-  email: string;
-  userID: string;
-  submissionID: string;
-  role: string;
-}
-
-// Email data needed in mjml
-export interface IEmailData {
-  url: string;
-}
-
-export interface IResetPasswordToken {
-  resetPassUserID: ObjectID;
-}
-
-export interface ISignUpToken {
-  signUpUserID: ObjectID;
-}
-
-export interface IUser {
+export interface IUser extends Document {
   _id: string;
   email?: string;
   password?: string;
   admin?: boolean;
+  publisher?: boolean;
+  teacher?: boolean;
+  teacherPro?: boolean;
+  family?: boolean;
   name?: string;
   center?: string;
   active?: boolean;
@@ -35,7 +17,8 @@ export interface IUser {
   authToken?: string;
   notifications?: boolean;
   signUpSurvey?: JSON;
-  rootFolder?: string;
+  rootFolder?: Date;
+  lastLogin?: string;
 }
 
 export const ContactSchema: Schema = new Schema({
@@ -55,6 +38,26 @@ export const ContactSchema: Schema = new Schema({
   },
 
   admin: {
+    type: Boolean,
+    default: false
+  },
+
+  publisher: {
+    type: Boolean,
+    default: false
+  },
+
+  teacher: {
+    type: Boolean,
+    default: false
+  },
+
+  teacherPro: {
+    type: Boolean,
+    default: false
+  },
+
+  family: {
     type: Boolean,
     default: false
   },
@@ -83,6 +86,10 @@ export const ContactSchema: Schema = new Schema({
 
   notifications: {
     type: Boolean
+  },
+
+  lastLogin: {
+    type: Date
   },
 
   signUpSurvey: {
