@@ -26,6 +26,10 @@ query usersAnalytics($loginAfter: Date){
   registered
   active
   admin
+  teacher
+  teacherPro
+  family
+  publisher  
   lastLogin
   }
 }

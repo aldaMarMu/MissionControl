@@ -107,13 +107,31 @@ const userResolver = {
       const registered: number = await UserModel.countDocuments({});
       const active: number = await UserModel.countDocuments({ active: true });
       const admin: number = await UserModel.countDocuments({ admin: true });
+      const publisher: number = await UserModel.countDocuments({
+        publisher: true
+      });
+      const teacher: number = await UserModel.countDocuments({ teacher: true });
+      const teacherPro: number = await UserModel.countDocuments({
+        teacherPro: true
+      });
+      const family: number = await UserModel.countDocuments({ family: true });
+
       let lastLogin: number = 0;
       if (args.loginAfter) {
         lastLogin = await UserModel.countDocuments({
           createdAt: { $gte: date }
         });
       }
-      return { registered, active, admin, lastLogin };
+      return {
+        registered,
+        active,
+        admin,
+        publisher,
+        teacher,
+        teacherPro,
+        family,
+        lastLogin
+      };
     }
   }
 };

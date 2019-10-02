@@ -18,6 +18,10 @@ type usersAnalytics {
   registered: Number
   active: Number
   admin: Number
+  teacher: Number
+  teacherPro: Number
+  family: Number
+  publisher: Number
   lastLogin: Number
 }
 

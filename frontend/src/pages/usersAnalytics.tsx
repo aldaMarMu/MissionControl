@@ -25,42 +25,111 @@ export function UsersAnalytics() {
   return (
     <MainLayout activeSection={Section.Analytics}>
       <h1>Bitbloq mission analytics</h1>
-      <Form>
-        <Label>Introducir fecha: </Label>
-        <Input
-          type="text"
-          name="date"
-          placeholder="MM/DD/AAAA"
-          value={date}
-          onChange={event => setDate(event.target.value)}
-        ></Input>
-        <Button
-          type="submit"
-          value="Seleccionar"
-          onClick={() => setDateQ(date)}
-        >
-          Actualizar
-        </Button>
-      </Form>
+
       {data && data.usersAnalytics && (
         <DataTable>
           <DataRow>
             <NameColumn>Total registrados: </NameColumn>
-            <NameColumn> {data.usersAnalytics.registered} </NameColumn>
+            <DataColumn> {data.usersAnalytics.registered} </DataColumn>
+            <DataColumn>
+              {" "}
+              {(data.usersAnalytics.registered /
+                data.usersAnalytics.registered) *
+                100}{" "}
+              %
+            </DataColumn>
           </DataRow>
           <DataRow>
             <NameColumn>Total activos: </NameColumn>
-            <NameColumn> {data.usersAnalytics.active}</NameColumn>
+            <DataColumn> {data.usersAnalytics.active}</DataColumn>
+            <DataColumn>
+              {" "}
+              {(data.usersAnalytics.active / data.usersAnalytics.registered) *
+                100}{" "}
+              %
+            </DataColumn>
           </DataRow>
           <DataRow>
             <NameColumn>Total administradores: </NameColumn>
-            <NameColumn> {data.usersAnalytics.admin}</NameColumn>
+            <DataColumn> {data.usersAnalytics.admin}</DataColumn>
+            <DataColumn>
+              {" "}
+              {(data.usersAnalytics.admin / data.usersAnalytics.registered) *
+                100}{" "}
+              %
+            </DataColumn>
+          </DataRow>
+          <DataRow>
+            <NameColumn>Total publicadores: </NameColumn>
+            <DataColumn> {data.usersAnalytics.publisher}</DataColumn>
+            <DataColumn>
+              {" "}
+              {(data.usersAnalytics.publisher /
+                data.usersAnalytics.registered) *
+                100}{" "}
+              %
+            </DataColumn>
+          </DataRow>
+          <DataRow>
+            <NameColumn>Total profesores: </NameColumn>
+            <DataColumn> {data.usersAnalytics.teacher}</DataColumn>
+            <DataColumn>
+              {" "}
+              {(data.usersAnalytics.teacher / data.usersAnalytics.registered) *
+                100}{" "}
+              %
+            </DataColumn>
+          </DataRow>
+          <DataRow>
+            <NameColumn>Total profesores pro: </NameColumn>
+            <DataColumn> {data.usersAnalytics.teacherPro}</DataColumn>
+            <DataColumn>
+              {" "}
+              {(data.usersAnalytics.teacherPro /
+                data.usersAnalytics.registered) *
+                100}{" "}
+              %
+            </DataColumn>
+          </DataRow>
+          <DataRow>
+            <NameColumn>Total familias: </NameColumn>
+            <DataColumn> {data.usersAnalytics.family}</DataColumn>
+            <DataColumn>
+              {" "}
+              {(data.usersAnalytics.family / data.usersAnalytics.registered) *
+                100}{" "}
+              %
+            </DataColumn>
           </DataRow>
           <DataRow>
             <NameColumn>
-              Total logados a partir de la fecha indicada {dateQ}:{" "}
+              Total logados a partir de la fecha indicada
+              <Form>
+                <Input
+                  type="text"
+                  name="date"
+                  placeholder="MM/DD/AAAA"
+                  value={date}
+                  onChange={event => setDate(event.target.value)}
+                ></Input>
+                <Button
+                  type="submit"
+                  value="Seleccionar"
+                  onClick={() => setDateQ(date)}
+                >
+                  Actualizar
+                </Button>
+              </Form>
+              :{" "}
             </NameColumn>
-            <NameColumn> {data.usersAnalytics.lastLogin}</NameColumn>
+            <DataColumn> {data.usersAnalytics.lastLogin}</DataColumn>
+            <DataColumn>
+              {" "}
+              {(data.usersAnalytics.lastLogin /
+                data.usersAnalytics.registered) *
+                100}{" "}
+              %
+            </DataColumn>
           </DataRow>
         </DataTable>
       )}
@@ -82,11 +151,10 @@ const DataRow = styled.div`
   border-bottom: 1px solid blue;
   border-top: 1px solid blue;
   margin-right: 14px;
-  height: 50px;
+  /* height: 50px; */
   align-items: middle;
   display: flex;
   align-items: center;
-  height: 51px;
   justify-content: space-around;
   :hover {
     background-color: #99ccff;
@@ -97,7 +165,21 @@ const DataRow = styled.div`
 const NameColumn = styled.div`
   border-right: 1px solid blue;
   border-left: 1px solid blue;
-  width: 50%;
+  width: 40%;
+  margin: 1px;
+  padding: 10px;
+  align-items: middle;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: black;
+`;
+
+const DataColumn = styled.div`
+  border-right: 1px solid blue;
+  border-left: 1px solid blue;
+  width: 30%;
   margin: 1px;
   padding: 10px;
   align-items: middle;
@@ -117,11 +199,11 @@ const Form = styled.div`
 `;
 
 const Input = styled.input`
-  font-size: 20px;
+  font-size: 15px;
   margin: 0px 10px;
   padding: 1px;
   margin: 1px;
-  height: 30px;
+  height: 20px;
 `;
 
 const Label = styled.label`
