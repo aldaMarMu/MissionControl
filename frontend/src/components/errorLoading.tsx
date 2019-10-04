@@ -8,7 +8,7 @@ export const ErrorLoadingPage: React.FC<{
 }> = ({ error, loading }) => {
   return (
     <MainLayout>
-      {error && <div>Error</div>}
+      {error && <div>Error... ¿Has iniciado sesión?</div>}
       {loading && <div>Loading...</div>}
     </MainLayout>
   );

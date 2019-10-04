@@ -45,7 +45,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({ activeSection }) => {
             <HeaderButton
               onClick={() => {
                 localStorage.clear();
-                window.location.reload();
+                window.location.replace("/");
               }}
             >
               Cerrar sesión

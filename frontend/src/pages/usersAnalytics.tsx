@@ -25,7 +25,6 @@ export function UsersAnalytics() {
   return (
     <MainLayout activeSection={Section.Analytics}>
       <h1>Bitbloq mission analytics</h1>
-
       {data && data.usersAnalytics && (
         <DataTable>
           <DataRow>
