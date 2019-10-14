@@ -26,111 +26,114 @@ export function UsersAnalytics() {
     <MainLayout activeSection={Section.Analytics}>
       <h1>Bitbloq mission analytics</h1>
       {data && data.usersAnalytics && (
-        <DataTable>
-          <DataRow>
-            <NameColumn>Total registrados: </NameColumn>
-            <DataColumn> {data.usersAnalytics.registered} </DataColumn>
-            <DataColumn>
-              {" "}
-              {(data.usersAnalytics.registered /
-                data.usersAnalytics.registered) *
-                100}{" "}
-              %
-            </DataColumn>
-          </DataRow>
-          <DataRow>
-            <NameColumn>Total activos: </NameColumn>
-            <DataColumn> {data.usersAnalytics.active}</DataColumn>
-            <DataColumn>
-              {" "}
-              {(data.usersAnalytics.active / data.usersAnalytics.registered) *
-                100}{" "}
-              %
-            </DataColumn>
-          </DataRow>
-          <DataRow>
-            <NameColumn>Total administradores: </NameColumn>
-            <DataColumn> {data.usersAnalytics.admin}</DataColumn>
-            <DataColumn>
-              {" "}
-              {(data.usersAnalytics.admin / data.usersAnalytics.registered) *
-                100}{" "}
-              %
-            </DataColumn>
-          </DataRow>
-          <DataRow>
-            <NameColumn>Total publicadores: </NameColumn>
-            <DataColumn> {data.usersAnalytics.publisher}</DataColumn>
-            <DataColumn>
-              {" "}
-              {(data.usersAnalytics.publisher /
-                data.usersAnalytics.registered) *
-                100}{" "}
-              %
-            </DataColumn>
-          </DataRow>
-          <DataRow>
-            <NameColumn>Total profesores: </NameColumn>
-            <DataColumn> {data.usersAnalytics.teacher}</DataColumn>
-            <DataColumn>
-              {" "}
-              {(data.usersAnalytics.teacher / data.usersAnalytics.registered) *
-                100}{" "}
-              %
-            </DataColumn>
-          </DataRow>
-          <DataRow>
-            <NameColumn>Total profesores pro: </NameColumn>
-            <DataColumn> {data.usersAnalytics.teacherPro}</DataColumn>
-            <DataColumn>
-              {" "}
-              {(data.usersAnalytics.teacherPro /
-                data.usersAnalytics.registered) *
-                100}{" "}
-              %
-            </DataColumn>
-          </DataRow>
-          <DataRow>
-            <NameColumn>Total familias: </NameColumn>
-            <DataColumn> {data.usersAnalytics.family}</DataColumn>
-            <DataColumn>
-              {" "}
-              {(data.usersAnalytics.family / data.usersAnalytics.registered) *
-                100}{" "}
-              %
-            </DataColumn>
-          </DataRow>
-          <DataRow>
-            <NameColumn>
-              Total logados a partir de la fecha indicada
-              <Form>
-                <Input
-                  type="text"
-                  name="date"
-                  placeholder="MM/DD/AAAA"
-                  value={date}
-                  onChange={event => setDate(event.target.value)}
-                ></Input>
-                <Button
-                  type="submit"
-                  value="Seleccionar"
-                  onClick={() => setDateQ(date)}
-                >
-                  Actualizar
-                </Button>
-              </Form>
-              :{" "}
-            </NameColumn>
-            <DataColumn> {data.usersAnalytics.lastLogin}</DataColumn>
-            <DataColumn>
-              {" "}
-              {(data.usersAnalytics.lastLogin /
-                data.usersAnalytics.registered) *
-                100}{" "}
-              %
-            </DataColumn>
-          </DataRow>
-        </DataTable>
+        <>
+          <DataTable>
+            <TitleRow>
+              <NameColumn>Tipos de usuarios</NameColumn>
+              <DataColumn>Número de usuarios</DataColumn>
+              <DataColumn>Porcentaje</DataColumn>
+            </TitleRow>
+            <DataRow>
+              <NameColumn>Registrados: </NameColumn>
+              <DataColumn> {data.usersAnalytics.registered} </DataColumn>
+              <DataColumn>-</DataColumn>
+            </DataRow>
+            <DataRow>
+              <NameColumn>Activos: </NameColumn>
+              <DataColumn> {data.usersAnalytics.active}</DataColumn>
+              <DataColumn>
+                {" "}
+                {(data.usersAnalytics.active / data.usersAnalytics.registered) *
+                  100}{" "}
+                %
+              </DataColumn>
+            </DataRow>
+            <DataRow>
+              <NameColumn>Total administradores: </NameColumn>
+              <DataColumn> {data.usersAnalytics.admin}</DataColumn>
+              <DataColumn>
+                {" "}
+                {(data.usersAnalytics.admin / data.usersAnalytics.registered) *
+                  100}{" "}
+                %
+              </DataColumn>
+            </DataRow>
+            <DataRow>
+              <NameColumn>Publicadores: </NameColumn>
+              <DataColumn> {data.usersAnalytics.publisher}</DataColumn>
+              <DataColumn>
+                {" "}
+                {(data.usersAnalytics.publisher /
+                  data.usersAnalytics.registered) *
+                  100}{" "}
+                %
+              </DataColumn>
+            </DataRow>
+            <DataRow>
+              <NameColumn>Profesores: </NameColumn>
+              <DataColumn> {data.usersAnalytics.teacher}</DataColumn>
+              <DataColumn>
+                {" "}
+                {(data.usersAnalytics.teacher /
+                  data.usersAnalytics.registered) *
+                  100}{" "}
+                %
+              </DataColumn>
+            </DataRow>
+            <DataRow>
+              <NameColumn>Profesores pro: </NameColumn>
+              <DataColumn> {data.usersAnalytics.teacherPro}</DataColumn>
+              <DataColumn>
+                {" "}
+                {(data.usersAnalytics.teacherPro /
+                  data.usersAnalytics.registered) *
+                  100}{" "}
+                %
+              </DataColumn>
+            </DataRow>
+            <DataRow>
+              <NameColumn>Familias: </NameColumn>
+              <DataColumn> {data.usersAnalytics.family}</DataColumn>
+              <DataColumn>
+                {" "}
+                {(data.usersAnalytics.family / data.usersAnalytics.registered) *
+                  100}{" "}
+                %
+              </DataColumn>
+            </DataRow>
+          </DataTable>
+          <DataTable>
+            <DataRow>
+              <NameColumn>
+                <p>Total logados a partir de la fecha indicada</p>
+                <Form>
+                  <Input
+                    type="text"
+                    name="date"
+                    placeholder="MM/DD/AAAA"
+                    value={date}
+                    onChange={event => setDate(event.target.value)}
+                  ></Input>
+                  <Button
+                    type="submit"
+                    value="Seleccionar"
+                    onClick={() => setDateQ(date)}
+                  >
+                    Actualizar
+                  </Button>
+                </Form>
+              </NameColumn>
+              <DataColumn> {data.usersAnalytics.lastLogin}</DataColumn>
+              <DataColumn>
+                {" "}
+                {(data.usersAnalytics.lastLogin /
+                  data.usersAnalytics.registered) *
+                  100}{" "}
+                %
+              </DataColumn>
+            </DataRow>
+          </DataTable>
+        </>
       )}
     </MainLayout>
   );
@@ -144,13 +147,24 @@ const DataTable = styled.div`
   color: #333333;
   width: 90%;
   align-items: center;
+  border: 1px solid blue;
+`;
+
+const TitleRow = styled.div`
+  border-bottom: 1px solid blue;
+  border-top: 1px solid blue;
+
+  align-items: middle;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  font-weight: bold;
+  height: 40px;
 `;
 
 const DataRow = styled.div`
   border-bottom: 1px solid blue;
-  border-top: 1px solid blue;
-  margin-right: 14px;
-  /* height: 50px; */
+
   align-items: middle;
   display: flex;
   align-items: center;
@@ -173,11 +187,12 @@ const NameColumn = styled.div`
   justify-content: center;
   font-size: 20px;
   color: black;
+  display: flex;
+  flex-direction: column;
 `;
 
 const DataColumn = styled.div`
   border-right: 1px solid blue;
-  border-left: 1px solid blue;
   width: 30%;
   margin: 1px;
   padding: 10px;

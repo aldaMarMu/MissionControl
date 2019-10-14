@@ -67,8 +67,6 @@ const Header = styled.div`
   min-height: 70px;
   align-items: center;
   justify-content: space-between;
-  padding: 0px 50px;
-  margin: 0px 50px;
   border-bottom: 1px solid rgb(204, 204, 204);
   width: 100%;
 

@@ -232,25 +232,6 @@ export function UsersTable() {
   );
 }
 
-export const Content = styled.div`
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-
-  h1 {
-    font-size: 60px;
-    margin-bottom: 20px;
-    font-weight: 600;
-    color: ${props => "blue"};
-  }
-
-  p {
-    font-size: 24px;
-  }
-`;
-
 const DataTable = styled.div`
   margin-top: 21px;
   margin-bottom: 21px;
