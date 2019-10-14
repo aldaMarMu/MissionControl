@@ -90,28 +90,39 @@ export function UsersAnalytics() {
           </DataTable>
           <DataTable>
             <DataRow>
-              <NameColumn>
-                <p>Total logados a partir de la fecha indicada</p>
-                <Form>
-                  <Input
-                    type="text"
-                    name="date"
-                    placeholder="MM/DD/AAAA"
-                    value={date}
-                    onChange={event => setDate(event.target.value)}
-                  ></Input>
-                  <Button
-                    type="submit"
-                    value="Seleccionar"
-                    onClick={() => setDateQ(date)}
-                  >
-                    Actualizar
-                  </Button>
-                </Form>
-              </NameColumn>
-              <DataColumn> {usersData.lastLogin}</DataColumn>
+              <NameColumn>Logados esta semana</NameColumn>
+              <DataColumn> {usersData.lastWeekLogin}</DataColumn>
               <DataColumn>
-                {getPercent(usersData.lastLogin, usersData.registered)}%
+                {getPercent(usersData.lastWeekLogin, usersData.registered)}%
+              </DataColumn>
+            </DataRow>
+            <DataRow>
+              <NameColumn>Logados hace dos semanas</NameColumn>
+              <DataColumn> {usersData.twoWeeksAgoLogin}</DataColumn>
+              <DataColumn>
+                {getPercent(usersData.twoWeeksAgoLogin, usersData.registered)}%
+              </DataColumn>
+            </DataRow>
+            <DataRow>
+              <NameColumn>Logados hace tres semanas</NameColumn>
+              <DataColumn> {usersData.threeWeeksAgoLogin}</DataColumn>
+              <DataColumn>
+                {getPercent(usersData.threeWeeksAgoLogin, usersData.registered)}
+                %
+              </DataColumn>
+            </DataRow>
+            <DataRow>
+              <NameColumn>Logados hace cuatro semanas</NameColumn>
+              <DataColumn> {usersData.fourWeeksAgoLogin}</DataColumn>
+              <DataColumn>
+                {getPercent(usersData.fourWeeksAgoLogin, usersData.registered)}%
+              </DataColumn>
+            </DataRow>
+            <DataRow>
+              <NameColumn>Logados hace cinco semanas</NameColumn>
+              <DataColumn> {usersData.fiveWeeksAgoLogin}</DataColumn>
+              <DataColumn>
+                {getPercent(usersData.fiveWeeksAgoLogin, usersData.registered)}%
               </DataColumn>
             </DataRow>
           </DataTable>

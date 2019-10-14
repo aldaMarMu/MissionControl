@@ -29,7 +29,11 @@ export const USERS_ANALYTICS_QUERY = gql`
       teacherPro
       family
       publisher
-      lastLogin
+      lastWeekLogin
+      twoWeeksAgoLogin
+      threeWeeksAgoLogin
+      fourWeeksAgoLogin
+      fiveWeeksAgoLogin
       docsByUserAvg
       docsByUserMax
       docsByUserMin

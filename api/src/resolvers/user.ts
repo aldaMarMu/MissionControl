@@ -124,7 +124,7 @@ const userResolver = {
      *  args: nothing.
      */
     usersAnalytics: async (root: any, args: any, context: any) => {
-      const date = new Date(args.loginAfter);
+      const date = new Date();
       const registered: number = await UserModel.countDocuments({});
       const active: number = await UserModel.countDocuments({ active: true });
       const admin: number = await UserModel.countDocuments({ admin: true });
@@ -137,12 +137,80 @@ const userResolver = {
       });
       const family: number = await UserModel.countDocuments({ family: true });
 
-      let lastLogin: number = 0;
-      if (args.loginAfter) {
-        lastLogin = await UserModel.countDocuments({
-          createdAt: { $gte: date }
-        });
-      }
+      const lastWeekLogin = await UserModel.countDocuments({
+        lastLogin: {
+          $lt: new Date(
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDate() + 1
+          ),
+          $gte: new Date(
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDate() - date.getDay() + 1
+          )
+        }
+      });
+
+      const twoWeeksAgoLogin = await UserModel.countDocuments({
+        lastLogin: {
+          $lt: new Date(
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDate() - date.getDay() + 1
+          ),
+          $gte: new Date(
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDate() - date.getDay() - 6
+          )
+        }
+      });
+
+      const threeWeeksAgoLogin = await UserModel.countDocuments({
+        lastLogin: {
+          $lt: new Date(
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDate() - date.getDay() + -6
+          ),
+          $gte: new Date(
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDate() - date.getDay() - 13
+          )
+        }
+      });
+
+      const fourWeeksAgoLogin = await UserModel.countDocuments({
+        lastLogin: {
+          $lt: new Date(
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDate() - date.getDay() - 13
+          ),
+          $gte: new Date(
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDate() - date.getDay() - 20
+          )
+        }
+      });
+
+      const fiveWeeksAgoLogin = await UserModel.countDocuments({
+        lastLogin: {
+          $lt: new Date(
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDate() - date.getDay() - 20
+          ),
+          $gte: new Date(
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDate() - date.getDay() - 27
+          )
+        }
+      });
 
       const allUsers = await UserModel.find({});
       let docsByUser: number[] = [];
@@ -163,7 +231,11 @@ const userResolver = {
         teacher,
         teacherPro,
         family,
-        lastLogin,
+        lastWeekLogin,
+        twoWeeksAgoLogin,
+        threeWeeksAgoLogin,
+        fourWeeksAgoLogin,
+        fiveWeeksAgoLogin,
         docsByUserAvg,
         docsByUserMax,
         docsByUserMin

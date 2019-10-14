@@ -23,7 +23,11 @@ type usersAnalytics {
   teacherPro: Number
   family: Number
   publisher: Number
-  lastLogin: Number
+  lastWeekLogin: Number
+  twoWeeksAgoLogin: Number
+  threeWeeksAgoLogin: Number
+  fourWeeksAgoLogin: Number
+  fiveWeeksAgoLogin: Number
   docsByUserAvg: Number
   docsByUserMax: Number
   docsByUserMin: Number
