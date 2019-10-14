@@ -6,7 +6,6 @@ export const LOGIN_MUTATION = gql`
   }
 `;
 
-
 export const USERS_QUERY = gql`
   query Users {
     users {
@@ -21,23 +20,26 @@ export const USERS_QUERY = gql`
 `;
 
 export const USERS_ANALYTICS_QUERY = gql`
-query usersAnalytics($loginAfter: Date){
-  usersAnalytics(loginAfter: $loginAfter){
-  registered
-  active
-  admin
-  teacher
-  teacherPro
-  family
-  publisher  
-  lastLogin
+  query usersAnalytics($loginAfter: Date) {
+    usersAnalytics(loginAfter: $loginAfter) {
+      registered
+      active
+      admin
+      teacher
+      teacherPro
+      family
+      publisher
+      lastLogin
+      docsByUserAvg
+      docsByUserMax
+      docsByUserMin
+    }
   }
-}
 `;
 
-export const UPDATEUSERSROLE_MUTATION =gql`
-  mutation UpdateUserRoles($id: ObjectID!, $input: UserIn!){
-    updateUserRoles(id: $id, input: $input){
+export const UPDATEUSERSROLE_MUTATION = gql`
+  mutation UpdateUserRoles($id: ObjectID!, $input: UserIn!) {
+    updateUserRoles(id: $id, input: $input) {
       id
       email
       teacher
@@ -45,4 +47,5 @@ export const UPDATEUSERSROLE_MUTATION =gql`
       teacherPro
       admin
     }
-}`
+  }
+`;

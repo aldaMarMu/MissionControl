@@ -12,6 +12,7 @@ type Mutation {
   login(email: EmailAddress!, password: String!): String
   updateUserRoles(id: ObjectID!, input: UserIn!): User
     @authRequired(requires: [ADMIN])
+  deleteUser(id: ObjectID!): User @authRequired(requires: [ADMIN])
 }
 
 type usersAnalytics {
@@ -23,6 +24,9 @@ type usersAnalytics {
   family: Number
   publisher: Number
   lastLogin: Number
+  docsByUserAvg: Number
+  docsByUserMax: Number
+  docsByUserMin: Number
 }
 
 type User {

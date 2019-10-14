@@ -3,6 +3,11 @@ import { contextController } from "../controllers/context";
 import { IUser, UserModel } from "../models/user";
 
 import { IEmailData, IResetPasswordToken, ISignUpToken } from "../types/types";
+import { DocumentModel } from "../models/document";
+import ObjectId from "bson";
+import { SubmissionModel } from "../models/submission";
+import { ExerciseModel } from "../models/exercise";
+import { FolderModel } from "../models/folder";
 
 const bcrypt = require("bcrypt");
 const jsonwebtoken = require("jsonwebtoken");
@@ -65,12 +70,28 @@ const userResolver = {
       if (!contactFound) {
         return new ApolloError("User does not exist", "USER_NOT_FOUND");
       }
-      console.log(args.input);
       return await UserModel.findOneAndUpdate(
         { _id: contactFound._id },
         { $set: args.input },
         { new: true }
       );
+    },
+
+    deleteUser: async (root: any, args: any, context: any) => {
+      if (context.user.role !== "ADMIN") {
+        return new AuthenticationError("Role not value");
+      }
+      const contactFound: IUser = await UserModel.findOne({
+        _id: args.id
+      });
+      if (!contactFound) {
+        return new ApolloError("User does not exist", "USER_NOT_FOUND");
+      }
+      await SubmissionModel.deleteMany({ user: contactFound._id });
+      await ExerciseModel.deleteMany({ user: contactFound._id });
+      await DocumentModel.deleteMany({ user: contactFound._id });
+      await FolderModel.deleteMany({ user: contactFound._id });
+      return await UserModel.deleteOne({ _id: contactFound._id }); // Delete every data of the user
     }
   },
 
@@ -122,6 +143,18 @@ const userResolver = {
           createdAt: { $gte: date }
         });
       }
+
+      const allUsers = await UserModel.find({});
+      let docsByUser: number[] = [];
+      for (let user of allUsers) {
+        docsByUser.push(await DocumentModel.countDocuments({ user: user._id }));
+      }
+
+      const docsByUserAvg =
+        docsByUser.reduce((a, b) => a + b, 0) / docsByUser.length;
+      const docsByUserMax = Math.max(...docsByUser);
+      const docsByUserMin = Math.min(...docsByUser);
+
       return {
         registered,
         active,
@@ -130,7 +163,10 @@ const userResolver = {
         teacher,
         teacherPro,
         family,
-        lastLogin
+        lastLogin,
+        docsByUserAvg,
+        docsByUserMax,
+        docsByUserMin
       };
     }
   }

@@ -7,6 +7,10 @@ import { useQuery } from "@apollo/react-hooks";
 import { USERS_ANALYTICS_QUERY } from "../apollo/queries";
 import { ErrorLoadingPage } from "../components/errorLoading";
 
+function getPercent(data: number, total: number) {
+  return ((data / total) * 100).toFixed(2);
+}
+
 // const today = new Date();
 export function UsersAnalytics() {
   // const date =
@@ -22,6 +26,9 @@ export function UsersAnalytics() {
   if (error) {
     return <ErrorLoadingPage error={true} />;
   }
+
+  const { usersAnalytics: usersData } = data;
+
   return (
     <MainLayout activeSection={Section.Analytics}>
       <h1>Bitbloq mission analytics</h1>
@@ -35,70 +42,49 @@ export function UsersAnalytics() {
             </TitleRow>
             <DataRow>
               <NameColumn>Registrados: </NameColumn>
-              <DataColumn> {data.usersAnalytics.registered} </DataColumn>
+              <DataColumn> {usersData.registered} </DataColumn>
               <DataColumn>-</DataColumn>
             </DataRow>
             <DataRow>
               <NameColumn>Activos: </NameColumn>
-              <DataColumn> {data.usersAnalytics.active}</DataColumn>
+              <DataColumn> {usersData.active}</DataColumn>
               <DataColumn>
-                {" "}
-                {(data.usersAnalytics.active / data.usersAnalytics.registered) *
-                  100}{" "}
-                %
+                {getPercent(usersData.active, usersData.registered)}%
               </DataColumn>
             </DataRow>
             <DataRow>
               <NameColumn>Total administradores: </NameColumn>
-              <DataColumn> {data.usersAnalytics.admin}</DataColumn>
+              <DataColumn> {usersData.admin}</DataColumn>
               <DataColumn>
-                {" "}
-                {(data.usersAnalytics.admin / data.usersAnalytics.registered) *
-                  100}{" "}
-                %
+                {getPercent(usersData.admin, usersData.registered)}%
               </DataColumn>
             </DataRow>
             <DataRow>
               <NameColumn>Publicadores: </NameColumn>
-              <DataColumn> {data.usersAnalytics.publisher}</DataColumn>
+              <DataColumn> {usersData.publisher}</DataColumn>
               <DataColumn>
-                {" "}
-                {(data.usersAnalytics.publisher /
-                  data.usersAnalytics.registered) *
-                  100}{" "}
-                %
+                {getPercent(usersData.publisher, usersData.registered)}%
               </DataColumn>
             </DataRow>
             <DataRow>
               <NameColumn>Profesores: </NameColumn>
-              <DataColumn> {data.usersAnalytics.teacher}</DataColumn>
+              <DataColumn> {usersData.teacher}</DataColumn>
               <DataColumn>
-                {" "}
-                {(data.usersAnalytics.teacher /
-                  data.usersAnalytics.registered) *
-                  100}{" "}
-                %
+                {getPercent(usersData.teacher, usersData.registered)}%
               </DataColumn>
             </DataRow>
             <DataRow>
               <NameColumn>Profesores pro: </NameColumn>
-              <DataColumn> {data.usersAnalytics.teacherPro}</DataColumn>
+              <DataColumn> {usersData.teacherPro}</DataColumn>
               <DataColumn>
-                {" "}
-                {(data.usersAnalytics.teacherPro /
-                  data.usersAnalytics.registered) *
-                  100}{" "}
-                %
+                {getPercent(usersData.teacherPro, usersData.registered)}%
               </DataColumn>
             </DataRow>
             <DataRow>
               <NameColumn>Familias: </NameColumn>
-              <DataColumn> {data.usersAnalytics.family}</DataColumn>
+              <DataColumn> {usersData.family}</DataColumn>
               <DataColumn>
-                {" "}
-                {(data.usersAnalytics.family / data.usersAnalytics.registered) *
-                  100}{" "}
-                %
+                {getPercent(usersData.family, usersData.registered)}%
               </DataColumn>
             </DataRow>
           </DataTable>
@@ -123,14 +109,33 @@ export function UsersAnalytics() {
                   </Button>
                 </Form>
               </NameColumn>
-              <DataColumn> {data.usersAnalytics.lastLogin}</DataColumn>
+              <DataColumn> {usersData.lastLogin}</DataColumn>
               <DataColumn>
-                {" "}
-                {(data.usersAnalytics.lastLogin /
-                  data.usersAnalytics.registered) *
-                  100}{" "}
-                %
+                {getPercent(usersData.lastLogin, usersData.registered)}%
               </DataColumn>
+            </DataRow>
+          </DataTable>
+
+          <DataTable>
+            <TitleRow>
+              <NameColumn>Estadísticas documentos</NameColumn>
+              <DataColumn>Número de documentos</DataColumn>
+              <DataColumn>Porcentaje</DataColumn>
+            </TitleRow>
+            <DataRow>
+              <NameColumn>Media de documentos por usuario</NameColumn>
+              <DataColumn> {usersData.docsByUserAvg.toFixed(2)}</DataColumn>
+              <DataColumn>-</DataColumn>
+            </DataRow>
+            <DataRow>
+              <NameColumn>Mínimo número de documentos por usuario</NameColumn>
+              <DataColumn> {usersData.docsByUserMin}</DataColumn>
+              <DataColumn>-</DataColumn>
+            </DataRow>
+            <DataRow>
+              <NameColumn>Máximo número de documentos por usuario</NameColumn>
+              <DataColumn> {usersData.docsByUserMax}</DataColumn>
+              <DataColumn>-</DataColumn>
             </DataRow>
           </DataTable>
         </>
